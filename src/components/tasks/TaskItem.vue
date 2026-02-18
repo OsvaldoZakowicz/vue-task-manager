@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import BaseButton from '../base/BaseButton.vue'
 import BaseInput from '../base/BaseInput.vue'
 
@@ -19,6 +20,8 @@ const emit = defineEmits(['toggle', 'delete', 'update'])
 // estado local de edicion
 const isEditing = ref(false)
 const editTitle = ref('')
+// para ruta a detalles
+const router = useRouter();
 
 function startEdit() {
   editTitle.value = props.task.title
@@ -35,6 +38,10 @@ function confirmEdit() {
 function cancelEdit() {
   isEditing.value = false
   editTitle.value = ''
+}
+
+function goToDetails() {
+  router.push({ name: 'task', params: { id: props.task.id  } })
 }
 </script>
 
@@ -72,6 +79,7 @@ function cancelEdit() {
         <BaseButton variant="secondary" @click="cancelEdit">Cancelar</BaseButton>
       </template>
       <template v-else>
+        <BaseButton variant="secondary" @click="goToDetails">Ver</BaseButton>
         <BaseButton variant="secondary" @click="startEdit">Editar</BaseButton>
         <BaseButton variant="danger" @click="emit('delete', task.id)">Eliminar</BaseButton>
       </template>
