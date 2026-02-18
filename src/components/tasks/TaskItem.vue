@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import BaseButton from '../base/BaseButton.vue'
 import BaseInput from '../base/BaseInput.vue'
 
+// datos que recibe desde el componente padre
+// son de solo lectura
 const props = defineProps({
   task: {
     type: Object,
@@ -10,6 +12,8 @@ const props = defineProps({
   },
 })
 
+// eventos que este componente hijo (task item) dispara para comunicarse
+// con su componente padre (task list)
 const emit = defineEmits(['toggle', 'delete', 'update'])
 
 // estado local de edicion
