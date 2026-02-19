@@ -1,9 +1,10 @@
 <script setup>
 import { useTasksStore } from '../stores/tasks'
+import { useDocumentTitle } from '../composables/useDocumentTitle'
 import TaskForm from '../components/tasks/TaskForm.vue'
 import TaskList from '../components/tasks/TaskList.vue'
 import TaskFilters from '../components/tasks/TaskFilters.vue'
-import { useDocumentTitle } from '../composables/useDocumentTitle'
+import BaseCard from '../components/base/BaseCard.vue'
 
 const store = useTasksStore()
 
@@ -20,24 +21,27 @@ useDocumentTitle(() => {
 <template>
   <div class="min-h-screen bg-gray-50">
     <div class="max-w-2xl mx-auto px-4 py-10 flex flex-col gap-6">
+      <BaseCard>
+        <template #header>
+          <h1 class="text-3xl font-bold text-gray-900">Task Manager</h1>
+          <p class="text-sm text-gray-500 mt-1">
+            {{ store.completedTasks }} tareas completadas, {{ store.pendingTasks }} pendientes
+          </p>
+        </template>
 
-      <!-- encabezado -->
-      <div>
-        <h1 class="text-3xl font-bold text-gray-900">Task Manager</h1>
-        <p class="text-sm text-gray-500 mt-1">
-          {{ store.completedTasks }} de {{ store.totalTasks }} tareas completadas
-        </p>
-      </div>
+        <!-- formulario de nueva tarea -->
+        <TaskForm />
 
-      <!-- formulario de nueva tarea -->
-      <TaskForm />
+        <!-- filtros y busqueda -->
+        <TaskFilters />
 
-      <!-- filtros y busqueda -->
-      <TaskFilters />
+        <!-- lista de tareas -->
+        <TaskList />
 
-      <!-- lista de tareas -->
-      <TaskList />
-
+        <template #footer>
+          <p class="text-xs text-gray-400">{{ store.totalTasks }} tareas registradas</p>
+        </template>
+      </BaseCard>
     </div>
   </div>
 </template>
