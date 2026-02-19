@@ -1,7 +1,7 @@
 <script setup>
 /* aca va la logica e inicio */
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useTasksStore } from '../stores/tasks';
 
 // useRoute da acceso a los params, query, name, etc. de la ruta activa
@@ -15,8 +15,13 @@ const task = computed(() =>
   store.tasks.find((t) => t.id === route.params.id)
 )
 
-//console.log('param id:', route.params.id)
-//console.log('tasks ids:', store.tasks.map(t => t.id))
+// guard de componente para navegacion
+// si el usuario navega de /tasks/1 a /tasks/2 directamente
+// el componente no se desmonta, solo cambia el param
+onBeforeRouteUpdate((to) => {
+  const exists = store.tasks.find(t => t.id === to.params.id)
+  if (!exists) return { name: 'home' }
+})
 
 </script>
 <template>
