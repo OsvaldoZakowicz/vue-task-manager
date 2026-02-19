@@ -3,8 +3,18 @@ import { useTasksStore } from '../stores/tasks'
 import TaskForm from '../components/tasks/TaskForm.vue'
 import TaskList from '../components/tasks/TaskList.vue'
 import TaskFilters from '../components/tasks/TaskFilters.vue'
+import { useDocumentTitle } from '../composables/useDocumentTitle'
 
 const store = useTasksStore()
+
+// quiero que el titulo de la pestaña diga "(n) Task Manager" o "Task Manager"
+// donde n es el numero de tareas pendientes
+useDocumentTitle(() => {
+  // tasks es reactivo, sera lo que vue registre para wathcEffect
+  const pending = store.tasks.filter((t) => !t.completed).length;
+  return pending > 0 ? `(${pending} pendientes) — Task Manager` : 'Task Manager';
+})
+
 </script>
 
 <template>
