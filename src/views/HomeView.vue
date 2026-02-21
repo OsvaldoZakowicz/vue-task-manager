@@ -35,8 +35,12 @@ useDocumentTitle(() => {
         <!-- filtros y busqueda -->
         <TaskFilters />
 
-        <!-- lista de tareas -->
-        <TaskList />
+        <!-- feedback de error -->
+        <p v-if="store.error" class="text-sm text-red-500 mt-1">{{ store.error }}</p>
+
+        <!-- feedback de carga o lista -->
+        <p v-if="store.isLoading" class="text-sm text-gray-500 mt-1">procesando...</p>
+        <TaskList v-else />
 
         <template #footer>
           <p class="text-xs text-gray-400">{{ store.totalTasks }} tareas registradas</p>

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useLocalStorage } from '../composables/useLocalStorage';
+import { useAsync } from '../composables/useAsync';
 
 // store principal de tareas usando composition api style
 export const useTasksStore = defineStore('tasks', () => {
@@ -8,6 +9,9 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref([]);
   const filter = ref('all'); // 'all' | 'pending' | 'completed'
   const searchQuery = ref('');
+
+  // instancias del patron de estados globales
+  const { isLoading, error, isSuccess, execute, reset } = useAsync();
 
   // getters
   const filteredTasks = computed(() => {
@@ -40,29 +44,38 @@ export const useTasksStore = defineStore('tasks', () => {
   const pendingTasks = computed(() => totalTasks.value - completedTasks.value);
 
   // actions
-  function addTask(title) {
+  // envueltas en execute() para manejar estados de carga globales
+  async function addTask(title) {
     if (!title.trim()) return;
 
-    tasks.value.push({
-      id: crypto.randomUUID(),
-      title: title.trim(),
-      completed: false,
-      createdAt: new Date().toISOString(),
+    await execute(() => {
+      tasks.value.push({
+        id: crypto.randomUUID(),
+        title: title.trim(),
+        completed: false,
+        createdAt: new Date().toISOString(),
+      });
     });
   }
 
-  function toggleTask(id) {
-    const task = tasks.value.find((t) => t.id === id);
-    if (task) task.completed = !task.completed;
+  async function toggleTask(id) {
+    await execute(() => {
+      const task = tasks.value.find((t) => t.id === id);
+      if (task) task.completed = !task.completed;
+    });
   }
 
-  function deleteTask(id) {
-    tasks.value = tasks.value.filter((t) => t.id !== id);
+  async function deleteTask(id) {
+    await execute(() => {
+      tasks.value = tasks.value.filter((t) => t.id !== id);
+    });
   }
 
-  function updateTask(id, newTitle) {
-    const task = tasks.value.find((t) => t.id === id);
-    if (task && newTitle.trim()) task.title = newTitle.trim();
+  async function updateTask(id, newTitle) {
+    await execute(() => {
+      const task = tasks.value.find((t) => t.id === id);
+      if (task && newTitle.trim()) task.title = newTitle.trim();
+    });
   }
 
   function setFilter(value) {
@@ -83,6 +96,9 @@ export const useTasksStore = defineStore('tasks', () => {
     totalTasks,
     completedTasks,
     pendingTasks,
+    isLoading,
+    error,
+    isSuccess,
     addTask,
     toggleTask,
     deleteTask,
