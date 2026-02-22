@@ -6,14 +6,14 @@
         <!-- RouterLink es el componente de navegacion de Vue Router -->
         <!-- no recarga la pagina, intercepta el click -->
         <RouterLink
-          to="/"
+          :to="{ name: 'home' }"
           class="text-sm text-gray-600 hover:text-gray-900"
           active-class="font-semibold text-gray-900"
         >
           Tareas
         </RouterLink>
         <RouterLink
-          to="/about"
+          :to="{ name: 'about' }"
           class="text-sm text-gray-600 hover:text-gray-900"
           active-class="font-semibold text-gray-900"
         >
