@@ -31,11 +31,12 @@ SPA de gestión de tareas construida como primer contacto práctico con Vue 3 y 
 
 ### Composables
 
-- Extracción de lógica reutilizable con funciones `use*`
+Extracción de lógica reutilizable con funciones `use*`
+
 - `useAsync` — patrón centralizado de estados loading / error / success
 - `useLocalStorage` — persistencia reactiva en localStorage
-- `useClock` — intervalo con limpieza automática en `onUnmounted`
 - `useDocumentTitle` — sincronización reactiva del título del documento
+- `useExistsTaskInStore` — determina si existe en la lista de tareas una con el id dado
 
 ### State management con Pinia
 
