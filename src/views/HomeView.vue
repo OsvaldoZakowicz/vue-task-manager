@@ -23,7 +23,7 @@ useDocumentTitle(() => {
     <div class="max-w-2xl mx-auto px-4 py-10 flex flex-col gap-6">
       <BaseCard>
         <template #header>
-          <h1 class="text-3xl font-bold text-gray-900">Task Manager</h1>
+          <h1 class="text-3xl font-bold text-gray-900">🎯 Task Manager</h1>
           <p class="text-sm text-gray-500 mt-1">
             {{ store.completedTasks }} tareas completadas, {{ store.pendingTasks }} pendientes
           </p>
