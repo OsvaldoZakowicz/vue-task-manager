@@ -4,7 +4,7 @@ SPA de gestión de tareas construida como primer contacto práctico con Vue 3 y 
 
 ## Demo
 
-[Ver en Netlify](#) <!-- reemplazar con la url real después del deploy -->
+[Ver en Netlify](https://vue3-task-manager.netlify.app/)
 
 ## Temas aprendidos con este proyecto
 
