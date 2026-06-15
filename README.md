@@ -99,7 +99,3 @@ src/
 ├── App.vue            # layout raíz
 └── main.js            # punto de entrada
 ```
-
-## Contexto
-
-Este proyecto forma parte del Bloque 1 de un roadmap de 45 días de estudio intensivo de Laravel + Vue 3. El código del Task Manager se reutilizará parcialmente en el Bloque 3, donde se construirá una SPA completa consumiendo una API REST real.
